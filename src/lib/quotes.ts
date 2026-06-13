@@ -3,8 +3,8 @@ import { CHALLENGE_START } from "./challenge";
 
 /**
  * 30 daily quotes, indexed by days elapsed since `CHALLENGE_START` (with a
- * 7am reset, see `getTodaysQuoteIndex`). Quote 30 (index 29) is the
- * challenge finale, shown on the last day.
+ * 7am Netherlands-time reset, see `getTodaysQuoteIndex`). Quote 30 (index 29)
+ * is the challenge finale, shown on the last day.
  */
 export const QUOTES: string[] = [
   "你不需要完美，你只需要今天比昨天好一点。加油！",
@@ -41,13 +41,39 @@ export const QUOTES: string[] = [
 
 export const FINALE_INDEX = QUOTES.length - 1;
 
+const ROLLOVER_TIMEZONE = "Europe/Amsterdam";
+const ROLLOVER_HOUR = 7;
+
+/** The calendar date and hour for `date`, as observed in `timeZone`. */
+function getZonedDateParts(date: Date, timeZone: string): { calendarDate: Date; hour: number } {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    hour12: false,
+  }).formatToParts(date);
+
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  const hour = get("hour");
+  return {
+    calendarDate: new Date(get("year"), get("month") - 1, get("day")),
+    hour: hour === 24 ? 0 : hour,
+  };
+}
+
 /**
- * Picks today's quote index (0-29). Quotes roll over at 7:00 AM, so
+ * Picks today's quote index (0-29). Quotes roll over at 7:00 AM Netherlands
+ * time (Europe/Amsterdam), regardless of the viewer's own timezone, so
  * before then the previous day's quote is still shown.
  */
 export function getTodaysQuoteIndex(now: Date): number {
-  let dayIndex = differenceInCalendarDays(now, CHALLENGE_START);
-  if (now.getHours() < 7) {
+  const today = getZonedDateParts(now, ROLLOVER_TIMEZONE);
+  const start = getZonedDateParts(CHALLENGE_START, ROLLOVER_TIMEZONE);
+
+  let dayIndex = differenceInCalendarDays(today.calendarDate, start.calendarDate);
+  if (today.hour < ROLLOVER_HOUR) {
     dayIndex -= 1;
   }
   return Math.min(QUOTES.length - 1, Math.max(0, dayIndex));

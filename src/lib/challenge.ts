@@ -1,5 +1,10 @@
-export const CHALLENGE_START = new Date(2025, 5, 13, 0, 0, 0);
-export const CHALLENGE_END = new Date(2025, 6, 13, 7, 0, 0);
+/**
+ * Both dates are absolute instants (UTC), so every viewer sees the same
+ * countdown regardless of their browser's timezone. The challenge starts 24
+ * hours after this file was last updated and runs for exactly 30 days.
+ */
+export const CHALLENGE_START = new Date(Date.UTC(2026, 5, 14, 22, 25, 0));
+export const CHALLENGE_END = new Date(CHALLENGE_START.getTime() + 30 * 24 * 60 * 60 * 1000);
 
 /** Percentage through the challenge, clamped to [0, 100]. */
 export function getProgressPercentage(now: Date): number {
