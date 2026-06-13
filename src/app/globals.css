@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-dm-sans);
+
+  /* Dark theme palette */
+  --color-base: #080808;
+  --color-surface: #141414;
+  --color-elevated: #1c1c1c;
+  --color-gold: #d6b85f;
+  --color-gold-soft: #f2d690;
+  --color-gold-dim: #8a6f2e;
+  --color-cream: #fdf9f3;
+  --color-muted: #988d83;
+  --color-lock: #3a1a1a;
+  --color-unlock: #1a2e1a;
+  --color-divider: #2a2318;
+
+  /* Typography scale */
+  --text-hero: 4.5rem; /* 72px */
+  --text-hero--line-height: 1.1;
+  --text-hero--letter-spacing: -0.02em;
+  --text-hero--font-weight: 400;
+
+  --text-quote: 2.25rem; /* 36px */
+  --text-quote--line-height: 1.5;
+  --text-quote--font-weight: 400;
+
+  --text-label: 0.6875rem; /* 11px */
+  --text-label--letter-spacing: 0.15em;
+  --text-label--font-weight: 500;
+
+  --text-card: 0.8125rem; /* 13px */
+  --text-card--font-weight: 400;
+
+  --text-counter: 3rem; /* 48px */
+  --text-counter--letter-spacing: -0.03em;
+  --text-counter--font-weight: 300;
+
+  --text-countdown: 3.5rem; /* 56px */
+  --text-countdown--font-weight: 300;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-cream);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-divider);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}

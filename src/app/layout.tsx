@@ -1,0 +1,44 @@
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import "./globals.css";
+
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+});
+
+export const metadata: Metadata = {
+  title: "For Lina 💛",
+  description: "For Lina, with love.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="zh"
+      className={`${cormorantGaramond.variable} ${dmSans.variable} h-full antialiased`}
+    >
+      <body className="min-h-full bg-base font-body text-cream">
+        {children}
+      </body>
+    </html>
+  );
+}
